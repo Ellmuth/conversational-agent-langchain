@@ -46,6 +46,7 @@ Open your browser and go to the Streamlit URL (usually http://localhost:8501).
 Usage
 Enter a message in the input field and click the "Send" button.
 The AI response will appear in the text area below.
+
 Project Structure
 bash
 Copy code
@@ -54,5 +55,6 @@ ai-chatbot-demo/
 ├── frontend.py       # Streamlit frontend
 ├── requirements.txt  # Project dependencies
 └── README.md         # Project documentation
+
 License
 This project is licensed under the MIT License.
