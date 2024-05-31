@@ -6,6 +6,10 @@ def fetch_sessions():
     response = requests.get("http://localhost:8000/sessions/")
     return response.json().get("sessions", [])
 
+def fetch_knowledge(session_id):
+    response = requests.get(f"http://localhost:8000/knowledge/{session_id}")
+    return response.json().get("knowledge", [])
+
 st.title("AI Chat Application")
 
 # Sidebar for session management
@@ -18,10 +22,13 @@ if selected_session == "New Session":
         response = requests.post("http://localhost:8000/new_chat/")
         new_session_id = response.json().get("session_id")
         st.session_state.session_id = new_session_id
+        st.session_state.knowledge = []
 else:
     st.session_state.session_id = selected_session
+    st.session_state.knowledge = fetch_knowledge(selected_session)
 
 session_id = st.session_state.get("session_id", "")
+knowledge = st.session_state.get("knowledge", [])
 user_message = st.text_input("Your Message:")
 
 if st.button("Send"):
@@ -37,3 +44,7 @@ if st.button("Send"):
                 st.write("AI Response:", result.get("ai_response"))
 
     st.text_input("Session ID", value=session_id, key="session_id_display", disabled=True)
+
+st.sidebar.title("Knowledge Base")
+for knowledge_item in knowledge:
+    st.sidebar.write(knowledge_item)
